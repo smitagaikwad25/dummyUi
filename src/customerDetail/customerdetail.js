@@ -3,32 +3,48 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import TextField from '@material-ui/core/TextField';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Button from '@material-ui/core/Button';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+
+
 
 const styles = theme => ({
-    container: {
-        // display: 'flex',
-        // flexWrap: 'wrap',
-    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: "30%"
     },
     dense: {
-        marginTop: 16,
+        marginTop: "16%",
     },
     menu: {
-        width: 200,
-    },
-    box: {
-        border: "inset 2px black",
-        marginTop: "15%",
-        marginLeft: "15%",
-        marginRight: "15%"
+        width: "25%",
     },
     textArea: {
         width: "62%"
+    },
+    checked: {
+
+    },
+    button: {
+
+        justifyContent: "flex-end"
+    },
+    root: {
+        display: "flex",
+        width: "60%",
+        marginTop: "20%",
+        marginLeft: "20%",
+        marginRight: "25%",
+        padding: "2%"
     }
+
 });
 
 class OutlinedTextFields extends React.Component {
@@ -39,7 +55,10 @@ class OutlinedTextFields extends React.Component {
         Locality: '',
         Address: '',
         City: '',
-        Landmark: ''
+        Landmark: '',
+        radioValue: '',
+        expanded: null,
+        button: ''
     };
 
     handleChange = name => event => {
@@ -88,86 +107,146 @@ class OutlinedTextFields extends React.Component {
         });
     };
 
+    handleChangeOfRadio = event => {
+        this.setState({ radioValue: event.target.value });
+    };
+
+    handleChangeButton = event => {
+        this.setState({ button: event.target.value });
+    };
+
+    handleChange = panel => (event, expanded) => {
+        this.setState({
+            expanded: expanded ? panel : false,
+        });
+    };
+
     render() {
         const { classes } = this.props;
+        const { expanded } = this.state;
 
         return (
+            <div className={classes.root}>
+                <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+                    <ExpansionPanelSummary >
+                        <Typography className={classes.secondaryHeading}>CustomerDetails</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                            <form className={classes.container} noValidate autoComplete="off">
+                                <TextField
+                                    id="outlined-name"
+                                    label="Name"
+                                    className={classes.textField}
+                                    value={this.state.name}
+                                    onChange={this.handleChange('name')}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                                <TextField
+                                    id="outlined-name"
+                                    label="PhoneNo"
+                                    className={classes.textField}
+                                    value={this.state.PhoneNumber}
+                                    onChange={this.handleChange('PhoneNumber')}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                                <br />
+                                <TextField
+                                    id="outlined-name"
+                                    label="Pincode"
+                                    className={classes.textField}
+                                    value={this.state.Pincode}
+                                    onChange={this.handleChange('Pincode')}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                                <TextField
+                                    id="outlined-name"
+                                    label="Locality"
+                                    className={classes.textField}
+                                    value={this.state.Locality}
+                                    onChange={this.handleChange('Locality')}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                                <br />
+                                <TextareaAutosize className={classes.textArea} aria-label="minimum height"
+                                    rowsMin={3} rowsMax={3} placeholder="Address" />
+                                <br />
+                                <TextField
+                                    id="outlined-name"
+                                    label="City/Town"
+                                    className={classes.textField}
+                                    value={this.state.City}
+                                    onChange={this.handleChange('City')}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                                <TextField
+                                    id="outlined-name"
+                                    label="Landmark"
+                                    className={classes.textField}
+                                    value={this.state.Landmark}
+                                    onChange={this.handleChange('Landmark')}
+                                    margin="normal"
+                                    variant="outlined"
+                                />
+                                <br />
 
-            <div className={classes.box}>
-                {/* <form className={classes.container} noValidate autoComplete="off"> */}
-                <p>Customer Details</p>
-                    <TextField
-                        id="outlined-name"
-                        label="Name"
-                        className={classes.textField}
-                        value={this.state.name}
-                        onChange={this.handleChange('name')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="PhoneNumber"
-                        type="number"
-                        className={classes.textField}
-                        value={this.state.PhoneNumber}
-                        onChange={this.handleChange('PhoneNumber')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <br />
-                    <TextField
-                        id="outlined-name"
-                        label="Pincode"
-                        type="number"
-                        className={classes.textField}
-                        value={this.state.Pincode}
-                        onChange={this.handleChange('Pincode')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="Locality"
-                        className={classes.textField}
-                        value={this.state.Locality}
-                        onChange={this.handleChange('Locality')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <br />
-                    <TextareaAutosize className={classes.textArea} aria-label="minimum height"
-                        rowsMin={3} rowsMax={3} placeholder="Address..." />
-                    <br />
-                    <TextField
-                        id="outlined-name"
-                        label="City/Town"
-                        className={classes.textField}
-                        value={this.state.City}
-                        onChange={this.handleChange('City')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="Landmark"
-                        className={classes.textField}
-                        value={this.state.Landmark}
-                        onChange={this.handleChange('Landmark')}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <br />
-                    <p>type</p>
-                    {/* </form> */}
-            </div>
+                                <div style={{ display: 'flex', }}>
+                                    <FormLabel >type</FormLabel>
+                                    <br></br>
+                                    <br></br>
+                                </div>
+
+                                <div style={{ display: 'flex', justifyContent: 'space-between', }}>
+                                    <FormControlLabel
+                                        value="Home"
+                                        control={<Radio color="primary" />}
+                                        label="Home"
+                                        labelPlacement="end"
+                                        onChange={this.handleChangeOfRadio}
+                                        checked={this.state.radioValue === "Home"}
+                                    />
+                                    <FormControlLabel
+                                        value="Work"
+                                        control={<Radio color="primary" />}
+                                        label="Work"
+                                        labelPlacement="end"
+                                        onChange={this.handleChangeOfRadio}
+                                        checked={this.state.radioValue === "Work"}
+                                    />
+                                    <FormControlLabel
+                                        value="other"
+                                        control={<Radio color="primary" />}
+                                        label="Other"
+                                        labelPlacement="end"
+                                        onChange={this.handleChangeOfRadio}
+                                        checked={this.state.radioValue === 'other'}
+                                    />
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
+                                        <Button variant="contained"
+                                            color="primary"
+                                            size="small"
+                                            value={this.state.button}
+                                            onChange={this.handleChangeButton}
+                                            className={classes.button}>
+                                            CONTINUE
+                                    </Button>
+                                    </div>
+                                </div>
+                            </form>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+            </div >
 
         );
     }
 }
 
 OutlinedTextFields.propTypes = {
-                    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(OutlinedTextFields);

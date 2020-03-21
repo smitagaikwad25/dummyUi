@@ -1,0 +1,19 @@
+.buttonTrue{
+    background-color: blue;
+    color:"red";
+    display:'flex';
+    width: "10%";
+    height: "5%";
+    margin-top: "50%";
+    margin-left: "30%";
+    
+}
+
+.buttonFalse{
+    background-color: red;
+    display: 'flex';
+    width: "200%";
+    height: "5%";
+    margin-top: "50%%";
+    margin-left: "30%";
+}

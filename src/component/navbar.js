@@ -15,6 +15,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import Button from '@material-ui/core/Button';
+import '../navbar.css';
 
 var APIcall = require('../congfiguration/configuration')
 
@@ -82,6 +84,24 @@ const styles = theme => ({
       display: 'none',
     },
   },
+
+  // buttonTrue: {
+  //   color:"red",
+  //   display: 'flex',
+  //   width: "30%",
+  //   height: "5%",
+  //   marginTop: "25%",
+  //   marginLeft: "30%",
+  // },
+
+  // buttonFalse: {
+  //   color:"yellow",
+  //   display: 'flex',
+  //   width: "100%",
+  //   height: "5%",
+  //   marginTop: "25%",
+  //   marginLeft: "30%",
+  // }
 });
 
 class PrimarySearchAppBar extends React.Component {
@@ -95,9 +115,19 @@ class PrimarySearchAppBar extends React.Component {
     this.state = {
       bookSearch: '',
       searchedBookList: [],
-
+      addToCart: "",
+      count: '',
+      button: true,
     }
 
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+
+  }
+
+  handleButtonClick() {
+    this.setState({
+      button: !this.state.button
+    })
   }
 
   handleProfileMenuOpen = event => {
@@ -116,16 +146,17 @@ class PrimarySearchAppBar extends React.Component {
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
   };
+
   SearchBook = async (event) => {
     let bookSearchDetail = event.target.value;
     console.log(event.target.value);
-    
+
     await this.setState({
       bookSearch: event.target.value
     });
 
     const searchObj = {
-      searchField : this.state.bookSearch
+      searchField: this.state.bookSearch
     }
     console.log("After serching --->", searchObj)
 
@@ -202,7 +233,7 @@ class PrimarySearchAppBar extends React.Component {
 
             <div className={classes.search}>
               <div className={classes.searchIcon} >
-                <SearchIcon style={{ width: 400 }}  />
+                <SearchIcon style={{ width: 400 }} />
               </div>
               <InputBase
                 placeholder="Search…"
@@ -242,6 +273,15 @@ class PrimarySearchAppBar extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
+        {/* <div >
+          <button
+            // style={{color:"red",}}
+            className={this.state.button ? "buttonTrue" : "buttonFalse"}
+            onClick={this.handleButtonClick}
+          >
+            Checkout
+        </button>
+        </div> */}
         {renderMenu}
         {renderMobileMenu}
       </div>
